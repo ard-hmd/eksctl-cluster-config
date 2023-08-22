@@ -6,6 +6,7 @@ This repository provides an example `eks-cluster-config.yaml` file that defines 
 
 - Log in with your AWS credentials using `aws configure`.
 - Install `eksctl` by following the installation guide [here](https://eksctl.io/introduction/#installation).
+- Have an existing Amazon EC2 Key Pair. If you don't have one, create a new key pair.
 
 ## Usage
 
