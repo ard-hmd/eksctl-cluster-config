@@ -1,0 +1,65 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+# Metadata for the cluster
+metadata:
+  name: <CLUSTER NAME>
+  region: <REGION>
+
+# Availability zones for the cluster
+availabilityZones:
+  - eu-west-3a
+  - eu-west-3b
+
+# Configuration for the managed node group
+managedNodeGroups:
+  - name: <NODE GROUPS NAME>
+    # Instance type for nodes
+    instanceType: <INSTANCE TYPE>
+    # Minimum and maximum number of nodes
+    minSize: 2
+    maxSize: 4
+    # Volume size for each node
+    volumeSize: 20
+    ssh:
+      # Allow SSH access
+      allow: true
+      # Use the key which is already on AWS
+      publicKeyName: <KEY NAME>
+    # Use private networking for nodes
+    privateNetworking: true
+    iam:
+      # IAM policies associated with the node group
+      withAddonPolicies:
+        autoScaler: true
+        externalDNS: true
+        imageBuilder: true
+        appMesh: true
+        albIngress: true
+
+# IAM configuration for the cluster
+iam:
+  # Associate the OIDC provider with the cluster
+  withOIDC: true
+  # IAM service account configuration for EBS CSI driver
+  serviceAccounts:
+    - metadata:
+        name: ebs-csi-controller-sa
+        namespace: kube-system
+      # IAM policy to attach to the service account
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
+      # Use IAM role only without creating a service account
+      roleOnly: true
+      # Name of the IAM role to use
+      roleName: AmazonEKS_EBS_CSI_DriverRole
+
+# Addons configuration for the cluster
+addons:
+  - name: aws-ebs-csi-driver
+    version: latest
+    # IAM role to associate with the addon
+    serviceAccountRoleARN: arn:aws:iam::$(aws sts get-caller-identity --query Account --output text):role/AmazonEKS_EBS_CSI_DriverRole
+    # IAM policy to attach to the addon
+    attachPolicyARNs:
+      - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
