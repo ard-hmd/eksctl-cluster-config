@@ -2,6 +2,11 @@
 
 This repository provides an example `eks-cluster-config.yaml` file that defines a basic Amazon EKS cluster configuration. The configuration includes details for the cluster's metadata, availability zones, managed node groups, IAM settings, and addons.
 
+## Prerequisites
+
+- Log in with your AWS credentials using `aws configure`.
+- Install `eksctl` by following the installation guide [here](https://eksctl.io/introduction/#installation).
+
 ## Usage
 
 1. Clone this repository to your local machine:
