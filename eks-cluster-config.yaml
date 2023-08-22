@@ -58,8 +58,8 @@ iam:
 addons:
   - name: aws-ebs-csi-driver
     version: latest
-    # IAM role to associate with the addon
-    serviceAccountRoleARN: arn:aws:iam::$(aws sts get-caller-identity --query Account --output text):role/AmazonEKS_EBS_CSI_DriverRole
+    # IAM role to associate with the addon (aws sts get-caller-identity --query Account --output text)
+    serviceAccountRoleARN: arn:aws:iam::<ACCOUNT ID>:role/AmazonEKS_EBS_CSI_DriverRole
     # IAM policy to attach to the addon
     attachPolicyARNs:
       - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
