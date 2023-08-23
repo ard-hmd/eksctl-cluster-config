@@ -42,3 +42,4 @@ The `eks-cluster-config.yaml` file includes various configuration settings:
 - **Addons Configuration:** Specifies any addons you want to enable for the cluster.
 
 Make sure to modify the values in the configuration file to match your requirements.
+
